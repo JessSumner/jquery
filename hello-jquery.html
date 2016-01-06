@@ -12,6 +12,14 @@
       .child {
         margin-right: 1.6em;
       }
+
+      .blue {
+        color: blue;
+      }
+
+      .red {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -56,6 +64,16 @@
 
     <div id="display"></div>
 
+    <div class="adding-removing-class-or-attributes">
+      <h1 id="third-target">Change my color!</h1>
+      <h1 id="fourth-target" class="blue">Change my color!</h1>
+    </div>
+
+    <div class="event-handlers">
+      <h1>Demo</h1>
+      <h1>A Second Demo</h1>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
       $(function() {
@@ -80,10 +98,10 @@
         //$('#sibling-target').prevALL().attr('style', 'color:lime');
         //$('#sibling-target').prevUntil('.stop').attr('style', 'color:lime');
 
-        //$('#sibling-target').attr('style', 'color:lime');
+        $('#sibling-target').attr('style', 'color:lime');
         //$('#sibling-target').next().attr('style', 'color:lime');
         //$('#sibling-target').nextALL().attr('style', 'color:lime');
-        $('#sibling-target').nextUntil('.stop').attr('style', 'color:lime');
+        //$('#sibling-target').nextUntil('.stop').attr('style', 'color:lime');
 
         var element = $('#sibling-target');
         var container = $('#siblings');
@@ -91,9 +109,26 @@
         
         $('#display').text('Index is ' + index);
 
-        var foundElement = container.children().get(index);
-        var jQueryObject = $(foundElement);
-        jQueryObject.attr('style', 'color:pink');
+        //var foundElement = container.children().get(index);
+        //var jQueryObject = $(foundElement);
+        //jQueryObject.attr('style', 'color:pink');
+
+        //$('#third-target').addClass('blue');
+        $('#third-target').addClass('red');
+        //$('#fourth-target').removeClass('blue red');
+
+        $('#third-target').attr('style', 'text-decoration:underline');
+        //$('#third-target').removeAttr('style', 'text-decoration:underline');
+        //$('#sibling-target').removeAttr('style', 'color:lime');
+
+        //var style = $('#third-target').attr('style');
+        //alert(style);
+
+        $('#fourth-target').html('<u>Updated using .html and therefore could add the underline within the same method, using .text would have not interpretted the underline command but just printed it out.</u>');
+
+        $('h1').click(function(){
+          $(this).text('Clicked!');
+        });
 
       });
     </script>
