@@ -1,0 +1,34 @@
+<style>
+  .highlight {
+    background-color: yellow;
+  }
+</style>
+<nav>
+  <a>Question1</a>
+  <a>Question1</a>
+  <div><a>DO NOT SELECT</a></div>
+</nav>
+
+<div>
+  <div class='item'>Question2</div>
+  <span class='item'>Question2</span>
+  <div class='item-group'>DO NOT SELECT</div>
+  <div class='demo'>Question3</div>
+  <span class='demo'>DO NOT SELECT</span>
+  <div class='demo'>Question3</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  $(function() {
+    $('nav > a').addClass('highlight');
+  })
+
+  $(function() {
+    $('[class="item"]').addClass('highlight');
+  })
+
+  $(function() {
+    $('div[class="demo"]').addClass('highlight');
+  })
+</script>
