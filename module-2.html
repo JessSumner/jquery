@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+  <title>Module Two</title>
+  <style>
+  </style>
+</head>
+<body>
+  <div class="event-handlers">
+    <div id="trigger">
+      An event can tell you information like where the mouse was when the event triggered.
+    </div>
+    <div id="form">
+      <label form="name">Name:</label>
+      <input type="text" class="form-control" id="name"></input>
+      <span class="help" hidden="hidden">Please enter your name</span>
+
+      <label form="email">Email:</label>
+      <input type="text" class="form-control" id="email"></input>
+      <span class="help" hidden="hidden">Please enter your email</span>
+    </div>
+
+    <div id="display"></div>
+
+    <div id="button-selector">
+      <div><button type="button" class="validate">First Button</button></div>
+      <div><button type="button" class="validate">Second Button</button></div>
+      <div><button type="button">Third Button</button></div>
+
+      <div id="button-display"></div>
+    </div>
+
+    <div id="create-buttons">
+      <div><button type="button" class="creator">Create a Button</button></div>
+      <div><button type="button" class="updater">Update Button</button></div>
+      <div id="target"></div>
+      <div id="second-button-display"></div>
+    </div>
+
+    <div id="one-time-only">
+      <div><button type="button" class="once">Execute</button></div>
+      <div id="third-button-display"></div>
+    </div>
+
+    <div id="trigger-happy">
+      <div><button type="button" class="trigger-example">Alpha</button></div>
+      <div><button type="button" class="trigger-example">Beta</button></div>
+      <div><button type="button" class="trigger-target">Execute event handler</button></div>
+      <div id="forth-button-display"></div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  $(function() {
+    $('#trigger').click(function (event) {
+      output = 'User clicked on ' + event.pageX + '/' + event.pageY;
+      $('#display').text(output);
+    });
+    $('input[type="text"]').focus(function () {
+      $(this).next('span.help').removeAttr('hidden');
+    }).blur(function () {
+      $('span.help').attr('hidden', 'hidden');
+    });
+    // Put the parent as the item and then the child which is going to trigger the event and then finally within the function put the object being targetted.
+    $('#button-selector').on('click', '.validate', function() {
+      $('#button-display').text('Clicked!!');
+    });
+
+    $('.creator').click(function () {
+      $('#target').html('<button type="button" class="updater">New Button</button>');
+    });
+
+    //$('.updater').click(function () {
+      //$('#second-button-display').text($(this).text() + ' was clicked!');
+    //});
+
+    $('#create-buttons').delegate('button.updater', 'click', function() {
+      $('#second-button-display').text($(this).text() + ' was clicked!');
+    });
+
+    //$('.once').click(function () {
+      //$('#third-button-display').text($('#third-button-display').text() + "Clicked!");
+    //});
+
+    $('.once').one('click', function () {
+      $('#third-button-display').text($('#third-button-display').text() + "Clicked!");
+    });
+
+    $('button.trigger-example').click(function () {
+      var existingText = $('#forth-button-display').text();
+      var buttonText = $(this).text();
+      $('#forth-button-display').text(existingText + ' - ' + buttonText);
+    });
+
+    $('button.trigger-target').click(function () {
+      //$('button.trigger-example').click();
+      $('button.trigger-example').trigger('click');
+      $('button.trigger-example').triggerHandler('click');
+    });
+
+  });
+</script>
