@@ -5,8 +5,20 @@
     .red {
       color: red;
     }
+
+    #box {
+      background-color: blue;
+      color: pink;
+      height: 5em;
+      width: 5em;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
   <div class="event-handlers">
     <div id="trigger">
@@ -66,6 +78,42 @@
       <div class="wrap-me">Second line</div>
       <div><button type="button" class="wrap-me">Wrap</button></div>
     </div>
+
+    <div class="animations">
+      <div id="box">
+        demo box
+      </div>
+      <div><button type="button" class="animate">Animate</button></div>
+      <div><button type="button" class="fade">Fade in/out</button></div>
+    
+      <div>
+        <label>Name:</label>
+        <input type="text" />
+      </div>
+      <div>
+        <button type="button" class="additional-information">
+          Show additional information
+        </button>
+      </div>
+      <div id="additional-information" class="hidden">
+        <label>Additional Information:</label>
+        <input type="text" />
+      </div>
+    </div>
+
+    <div class="remove-replace">
+      <div id="replace-target">
+        Replace me
+      </div>
+      <div><button type="button" class="replace">Replace</button></div>
+
+      <div id="clone-target">
+        Clone me
+      </div>
+      <div id="container"></div>
+      <div><button type="button" class="clone">Clone</button></div>
+    </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
@@ -130,6 +178,36 @@
       //$('div.wrap-me').wrap('<div class="red"><div>');
       //$('div.wrap-me').wrapAll('<div class="red"><div>');
       $('div.wrap-me').wrapInner('<div class="red"><div>');
+    });
+
+    $('button.animate').click(function () {
+      //$('#box').hide(1000);
+      //$('#box').hide(0);
+      //$('#box').show(1000);
+      $('#box').toggle(1000);
+    });
+
+    $('button.fade').click(function () {
+      //$('#box').fadeOut(1000);
+      //$('#box').fadeIn(1000);
+      $('#box').fadeToggle(1000);
+    });
+
+    $('button.additional-information').click(function () {
+      $('#additional-information').show(0);
+    });
+
+    $('button.replace').click(function () {
+      //$('#replace-target').replaceWith('<div class="red">NewContent</div>');
+      //$('#replace-target').replaceWith('<div id=#replace-target class="red">New Content but adding in the original id</div>');
+      $('#replace-target').empty();
+    });
+
+    var $cloneTarget = $('#clone-target').clone()
+    $cloneTarget.removeAttr('id')
+
+    $('button.clone').click(function () {
+      $('#container').append($cloneTarget.clone());
     });
 
   });
