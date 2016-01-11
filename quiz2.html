@@ -1,0 +1,25 @@
+<head>
+  <title>Quiz 2</title>
+</head>
+<body>
+
+  <div id="parent">
+    <div class="sample">Text</div>
+    <div class="demo">Text</div>
+    <div id="target">want text to appear below here</div>
+    <div class="demo">Text</div>
+  </div>
+  <div><button type="button" id="button">Button</button></div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+
+  $(function () {
+    $('#button').click(function () {
+      //$('#target').after('<section>New element</section>');
+      //$('#parent').children().wrapAll('<section></section>');
+      $('#target').append('<section>New element</section>');
+    });
+  });
+
+</script>
