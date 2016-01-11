@@ -2,6 +2,9 @@
 <head>
   <title>Module Two</title>
   <style>
+    .red {
+      color: red;
+    }
   </style>
 </head>
 <body>
@@ -46,6 +49,22 @@
       <div><button type="button" class="trigger-example">Beta</button></div>
       <div><button type="button" class="trigger-target">Execute event handler</button></div>
       <div id="forth-button-display"></div>
+    </div>
+
+    <div id="adding-elements">
+      <div id="prepend-append" class="red">
+        This text is already here
+      </div>
+      <div><button type="button" class="prepend-append">Prepend Append</button></div>
+      <div id="before-after" class="red">
+        This text is already here
+      </div>
+      <div><button type="button" class="before-after">Before After</button></div>
+      <div class="addition-display"></div>
+
+      <div class="wrap-me">First line</div>
+      <div class="wrap-me">Second line</div>
+      <div><button type="button" class="wrap-me">Wrap</button></div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -94,7 +113,23 @@
     $('button.trigger-target').click(function () {
       //$('button.trigger-example').click();
       $('button.trigger-example').trigger('click');
-      $('button.trigger-example').triggerHandler('click');
+      //$('button.trigger-example').triggerHandler('click');
+    });
+
+    $('button.prepend-append').click(function () {
+      $('#prepend-append').prepend('<div>This goes at the beginning</div>');
+      $('#prepend-append').append('<div>This goes at the end</div>');
+    });
+
+    $('button.before-after').click(function () {
+      $('#before-after').before('<div>This goes at the beginning</div>');
+      $('#before-after').after('<div>This goes at the end</div>');
+    });
+
+    $('button.wrap-me').click(function () {
+      //$('div.wrap-me').wrap('<div class="red"><div>');
+      //$('div.wrap-me').wrapAll('<div class="red"><div>');
+      $('div.wrap-me').wrapInner('<div class="red"><div>');
     });
 
   });
