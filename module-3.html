@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module Three</title>
+    <style>
+      .box {
+        background-color: blue;
+        color: pink;
+        height: 70px;
+        width: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="promises">
+      <div class="output">
+        Click on the button to see how promises work
+      </div>
+      <div><button type="button">Click here</button></div>
+      <div class="box">sample content</div>
+    </div>
+
+    <div class="workers">
+      <div>
+        <input type="text" id="message" class="form-control" />
+        <button type="button" id="send-message" disabled="disabled">Send Message</button>
+      </div>
+      <ul id="messages">
+      </ul>
+    </div>
+
+    <div class="deferred-workers">
+      <div>
+        <button type="button" id="start-worker">Start worker</button>
+      </div>
+      <ul id="more-messages"></ul>
+    </div>
+
+    <div class="using-json">
+      <div class="first-name">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" />
+      </div>
+      <div class ="last-name">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" />
+      </div>
+      <div class="json">
+        <label for="json-data">JSON</label>
+        <textarea id="json-data" cols="60"></textarea>
+      </div>
+      <button type="button" id="stringify">Stringify</button>
+      <button type="button" id="parse">Parse</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      // First Worker example
+      var worker = new Worker('./worker.js');
+
+      if (Worker === null) {
+        alert("Browser doesn't support web workers");
+      } else {
+        alert("You are ready to use your worker.");
+      }
+
+      worker.addEventListener('message', function (e) {
+
+        if (e.data === "READY") {
+          $('#messages').append('<li>Worker ready</li>');
+          $('#send-message').removeAttr('disabled').click(function () {
+            var message = $('#message').val();
+            worker.postMessage(message);
+          });
+          $('#message').focus();
+        } else {
+          $('#messages').append('<li>' + e.data + '</li>');
+          $('#message').val('').focus();
+        }
+      });
+
+      // Second Worker example using deferred.
+      $('#start-worker').click(function () {
+        var promise = beginProcessing();
+        promise.progress(function (message) {
+          $('#more-messages').append('<li>Progress: ' + message + '</li>');
+        }).done(function(message) {
+          $('#more-messages').append('<li>Completion: ' + message + '</li>');
+        });
+      });
+
+      function beginProcessing() {
+        // Create Deferred Object
+        var deferred = new $.Deferred();
+        var worker = new Worker('./deferred-worker.js');
+
+        worker.addEventListener('message', function (e) {
+          if (e.data === 'READY') {
+            deferred.notify('Worker started');
+          } else if(e.data === 'COMPLETED') {
+            deferred.resolve('Worker completed');
+            worker.terminate();
+          }
+        });
+        return deferred.promise();
+      }
+
+      //$(function() {
+        //$('button').click(function () {
+          //$('.box').hide(1000);
+          //$('.output').text('This changes at the same time');
+        //});
+
+        //$('button').click(function () {
+          //$('.box').hide(1000).promise().done(function() {
+            //$('.output').text('This changes after the box is hidden.');
+          //});
+        //});
+      //});
+
+      $(function() {
+        $('#stringify').click(function() {
+          var person = new Object();
+          person.firstName = $('#first-name').val();
+          person.lastName = $('#last-name').val();
+          var jsonData = JSON.stringify(person);
+
+          $('#json-data').val(jsonData);
+        })
+
+        $('#parse').click(function() {
+          var jsonData = $('#json-data').val();
+          var person = JSON.parse(jsonData);
+          $('#first-name').val(person.firstName);
+          $('#last-name').val(person.lastName);
+        });
+      });
+
+    </script>
+  </body>
+</html>
+
