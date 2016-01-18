@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Using Ajax</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <div class="using-get">
+      <input type="text" id="input-data" />
+      <div>
+        <button type="button" id="execute">Get Data</button>
+      </div>
+      <div id="output"></div>
+    </div>
+
+    <div class="using-getjson">
+      <div>
+        <label for="first-name">First name:</label>
+        <input type="text" id="first-name" />
+      </div>
+      <div>
+        <label for="last-name">Last name:</label>
+        <input type="text" id="last-name" />
+      </div>
+      <div>
+        <button type="button" id="getjson">Load data</button>
+      </div>
+    </div>
+
+    <div class="uploading-data">
+      <div>        
+        <label for="first-name">First name:</label>
+        <input type="text" id="uploading-first-name" />
+      </div>
+      <div>
+        <label for="last-name">Last name:</label>
+        <input type="text" id="uploading-last-name" />
+      </div>
+      <div>
+        <button type="button" id="upload">Upload data</button>
+      </div>
+      <div id="display">Data will go here</div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      $(function () {
+        $('#execute').click(function () { 
+          var url = 'window.location.href' + $('#input-data').val();
+          $.get(url, function(data) {
+            $('#output').text(data);
+          });
+        });
+
+        $('#getjson').click(function () {
+          $.getJSON('url', function(person) {
+            $('#first-name').val(person.firstName);
+            $('#last-name').val(person.lastName);
+          });
+        });
+
+        $('#upload').click(function () {
+          var person = { firstName: $('#uploading-first-name').val(), lastName: $('#uploading-last-name').val() };
+          $.post('url', person).done(function(data) {
+            $('#display').text(data.firstName + ' ' + data.lastName)
+          });
+
+          $(document).ajaxSend(function () {
+            $('#upload').attr('disabled', 'disabled');
+          }).ajaxComplete(function () {
+            $('#upload').removeAttr('disabled');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
