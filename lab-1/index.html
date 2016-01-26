@@ -1,0 +1,74 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      body {
+       font-family: Verdana;
+      }
+      h1, h2, h3 {
+       color: darkblue;
+      }
+      .rating-circle {
+       height: 2em;
+       width: 2em;
+       border: .1em solid black;
+       border-radius: 1.1em;
+       display: inline-block;
+       margin: 0;
+       padding: .1em;
+      }
+
+      .rating-hover {
+       background-color: yellow;
+      }
+
+      .rating-chosen {
+       background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Contoso Web Developer Conference</h1>
+    <h2>Finding elements using jQuery</h2>
+    <div>This session is about identifying elements using jQuery methods and selectors.</div>
+    <h3>Rate this session</h3>
+    <div id="rating-container">
+      <div class="rating-circle"></div>
+      <div class="rating-circle"></div>
+      <div class="rating-circle"></div>
+      <div class="rating-circle"></div>
+      <div class="rating-circle"></div>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+
+    <script>
+      $(function() {
+        var rating;
+        
+        $('.rating-circle').click (function(){
+          rating = $(this);
+          rating.removeClass('rating-hover').addClass('rating-chosen');
+          rating.prevAll().removeClass('rating-hover').addClass('rating-chosen');
+        });
+
+        $('.rating-circle').mouseenter (function(){
+          $(this).removeClass('rating-chosen').addClass('rating-hover');
+          $(this).prevAll().removeClass('rating-chosen').addClass('rating-hover');
+          $(this).nextAll().removeClass('rating-chosen');
+        });
+
+        $('.rating-circle').mouseleave (function(){
+          $(this).removeClass('rating-hover');
+          $(this).prevAll().removeClass('rating-hover');
+          if (rating) {
+            rating.addClass('rating-chosen');
+            rating.prevAll().addClass('rating-chosen');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
