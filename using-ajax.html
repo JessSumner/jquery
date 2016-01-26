@@ -47,31 +47,31 @@
     <script>
       $(function () {
         $('#execute').click(function () { 
-          var url = 'window.location.href' + $('#input-data').val();
+          var url = window.location + $('#input-data').val();
           $.get(url, function(data) {
             $('#output').text(data);
           });
         });
 
-        $('#getjson').click(function () {
-          $.getJSON('url', function(person) {
-            $('#first-name').val(person.firstName);
-            $('#last-name').val(person.lastName);
-          });
-        });
-
-        $('#upload').click(function () {
-          var person = { firstName: $('#uploading-first-name').val(), lastName: $('#uploading-last-name').val() };
-          $.post('url', person).done(function(data) {
-            $('#display').text(data.firstName + ' ' + data.lastName)
-          });
-
-          $(document).ajaxSend(function () {
-            $('#upload').attr('disabled', 'disabled');
-          }).ajaxComplete(function () {
-            $('#upload').removeAttr('disabled');
-          });
-        });
+        //$('#getjson').click(function () {
+        //  $.getJSON('url', function(person) {
+        //    $('#first-name').val(person.firstName);
+        //    $('#last-name').val(person.lastName);
+        //  });
+        //});
+//
+        //$('#upload').click(function () {
+        //  var person = { firstName: $('#uploading-first-name').val(), lastName: $('#uploading-last-//name').val() };
+        //  $.post('url', person).done(function(data) {
+        //    $('#display').text(data.firstName + ' ' + data.lastName)
+        //  });
+//
+        //  $(document).ajaxSend(function () {
+        //    $('#upload').attr('disabled', 'disabled');
+        //  }).ajaxComplete(function () {
+        //    $('#upload').removeAttr('disabled');
+        //  });
+        //});
       });
     </script>
   </body>
